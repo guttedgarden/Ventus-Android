@@ -117,7 +117,7 @@ public class DHT11Fragment extends Fragment {
 
 
         okHTTP openWeather = new okHTTP();
-        openWeather.run("https://api.openweathermap.org/data/2.5/weather?id=569696&units=metric&appid=965fd68674a5e90fb27283d5ce7f8e02&lang=ru", new Callback() {
+        openWeather.run("https://api.openweathermap.org", new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
 
