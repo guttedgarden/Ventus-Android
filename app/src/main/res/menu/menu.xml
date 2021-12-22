@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/mq4"
+        android:title="Метан"
+        android:fontFamily="@font/project_font"
+        android:icon="@drawable/ic_mq4"
+        android:iconTint="@color/itemBackground"/>
+    <item
+        android:id="@+id/mq7"
+        android:title="CO"
+        android:fontFamily="@font/project_font"
+        android:icon="@drawable/ic_mq7"
+        android:iconTint="@color/itemBackground"/>
+    <item
+        android:id="@+id/mq135"
+        android:title="Углекислый "
+        android:fontFamily="@font/project_font"
+        android:icon="@drawable/ic_mq135"
+        android:iconTint="@color/itemBackground"/>
+    <item
+        android:id="@+id/dht11"
+        android:title="Температура"
+        android:fontFamily="@font/project_font"
+        android:icon="@drawable/ic_dht11"
+        android:iconTint="@color/itemBackground"/>
+
+</menu>

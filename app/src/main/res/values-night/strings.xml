@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">Ventus</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="mq4_info">Природный газ</string>
+    <string name="mq4_link">/mq4</string>
+
+    <string name="mq7_info">Угарный газ</string>
+    <string name="mq7_link">/mq7</string>
+
+    <string name="mq135_info">Углекислый газ</string>
+    <string name="mq135_link">/mq135</string>
+
+    <string name="dht11_info">Температура</string>
+    <string name="dht11_link">/dht11</string>
+
+    <string name="settingsString">Настройки</string>
+    <string name="ipAddressConfig">IP_ADDRESS_CONFIG</string>
+
+    <string name="goodEmoji">(^_^)</string>
+    <string name="badEmoji">(-ꞈ-)</string>
+
+    <string name="wifiError">Check WiFi hotspot connection</string>
+
+    <string name="path_search">
+       M141,17 A9,9 0 1,1 142,16 L149,23
+    </string>
+
+    <string name="OPEN_WEATHER_MAP_API_KEY">965fd68674a5e90fb27283d5ce7f8e02</string>
+</resources>
