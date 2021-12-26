@@ -1,4 +1,4 @@
-package com.ventus.app;
+package com.ventus.app.tools;
 
 import android.text.SpannableString;
 import android.text.Spanned;

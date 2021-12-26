@@ -1,14 +1,11 @@
-package com.ventus.app;
+package com.ventus.app.fragments;
 
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 
-import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
@@ -23,11 +20,17 @@ import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.github.mikephil.charting.utils.ColorTemplate;
+import com.ventus.app.BuildConfig;
+import com.ventus.app.R;
+import com.ventus.app.db.MyConstants;
+import com.ventus.app.tools.Shared;
+import com.ventus.app.tools.arrayList;
+import com.ventus.app.tools.convert;
+import com.ventus.app.tools.differentSize;
+import com.ventus.app.tools.okHTTP;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -75,11 +78,7 @@ public class DHT11Fragment extends Fragment {
         if ((Shared.existPreferences(getContext(),"URL_REQUEST_CONFIG5"))){
             emoInfoText.setText(Shared.getStringPreferences(getContext(),"URL_REQUEST_CONFIG5"));
         }
-        /**
-         *
-         *
-         *
-         */
+
 
         /**
          *
@@ -107,7 +106,7 @@ public class DHT11Fragment extends Fragment {
                                         firstInfoText.setText(differentSize.spannableTwoString("В помещении", textSize, String.valueOf(convert.round(convert.convertToDouble(temp), 1)),
                                                 textSize * 4, "°C", textSize + 10));
                                         secondInfoText.setText(differentSize.spannableTwoString("Влажность", textSize, String.valueOf(convert.round(convert.convertToDouble(hum), 1)),
-                                                textSize * 4, "°C", textSize + 10));
+                                                textSize * 4, "%", textSize + 10));
                                     }
                                 });
                             }
@@ -133,6 +132,7 @@ public class DHT11Fragment extends Fragment {
                             @Override
                             public void run() {
                                 try {
+                                    Thread.sleep(2500);
                                     JSONObject json = new JSONObject(myResponse);
                                     JSONArray array = json.getJSONArray("weather");
                                     JSONObject object = array.getJSONObject(0);
@@ -145,6 +145,8 @@ public class DHT11Fragment extends Fragment {
                                     thirdInfoText.setText(differentSize.spannableTwoString("На улице", textSize, Double.toString(temperature), textSize * 4, "°C", textSize + 10));
                                     fourInfoText.setText(differentSize.spannableTwoString("Влажность", textSize, Double.toString(humidity), textSize * 4, "%", textSize + 10));
                                 } catch (JSONException e) {
+                                    e.printStackTrace();
+                                } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }
                             }
@@ -164,7 +166,7 @@ public class DHT11Fragment extends Fragment {
          * CHART
          *
          */
-        LineDataSet lineDataSet = new LineDataSet(arrayList.lineChartDataSetRandom(),"Temperature");
+        LineDataSet lineDataSet = new LineDataSet(arrayList.getArrayListFromDB(getActivity(), MyConstants.DHT11_TEMP),"Temperature");
         ArrayList <ILineDataSet> iLineDataSets = new ArrayList<>();
         iLineDataSets.add(lineDataSet);
 

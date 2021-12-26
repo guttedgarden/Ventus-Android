@@ -2,30 +2,20 @@ package com.ventus.app;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.core.content.res.ResourcesCompat;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Interpolator;
-import android.graphics.drawable.AnimatedVectorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
-import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.util.Set;
+import com.ventus.app.tools.Shared;
 
 public class SettingsActivity extends AppCompatActivity {
-
 
     Window window;
     @Override

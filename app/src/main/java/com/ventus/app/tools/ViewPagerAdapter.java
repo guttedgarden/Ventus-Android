@@ -1,7 +1,12 @@
-package com.ventus.app;
+package com.ventus.app.tools;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
+
+import com.ventus.app.fragments.DHT11Fragment;
+import com.ventus.app.fragments.MQ135Fragment;
+import com.ventus.app.fragments.MQ4Fragment;
+import com.ventus.app.fragments.MQ7Fragment;
 
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 

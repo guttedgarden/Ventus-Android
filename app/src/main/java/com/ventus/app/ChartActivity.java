@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
 
+import com.ventus.app.tools.Shared;
+
 public class ChartActivity extends AppCompatActivity {
 
     Window window;
@@ -17,7 +19,7 @@ public class ChartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chart);
         TextView upperTextWithInfo = findViewById(R.id.upperTextWithInfo);
-        upperTextWithInfo.append(" "+Shared.getStringPreferences(this,"FRAGMENT_STATUS"));
+        upperTextWithInfo.append(" "+ Shared.getStringPreferences(this,"FRAGMENT_STATUS"));
 
         //Проверка SDK
         if(Build.VERSION.SDK_INT>=21){

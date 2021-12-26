@@ -1,19 +1,13 @@
-package com.ventus.app;
+package com.ventus.app.fragments;
 
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.Network;
-import android.net.NetworkCapabilities;
-import android.net.NetworkInfo;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,10 +20,16 @@ import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.ventus.app.R;
+import com.ventus.app.db.MyConstants;
+import com.ventus.app.tools.Shared;
+import com.ventus.app.tools.arrayList;
+import com.ventus.app.tools.convert;
+import com.ventus.app.tools.differentSize;
+import com.ventus.app.tools.okHTTP;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -38,18 +38,14 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-import static android.content.Context.WIFI_SERVICE;
-import static androidx.core.content.ContextCompat.getSystemService;
-
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MQ4Fragment extends Fragment {
+public class MQ7Fragment extends Fragment {
 
 
-
-    public MQ4Fragment() {
+    public MQ7Fragment() {
         // Required empty public constructor
     }
     public static Context contextOfApplication;
@@ -58,10 +54,8 @@ public class MQ4Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment, container, false);
-        contextOfApplication = getActivity().getApplicationContext();
 
         onClickSettingsButton(v);onChartSettingsButton(v);
-
 
 
         /**
@@ -69,7 +63,7 @@ public class MQ4Fragment extends Fragment {
          * INIT
          *
          */
-        final TextView upperTextWithInfo = (TextView) v.findViewById(R.id.upperTextWithInfo);upperTextWithInfo.setText(R.string.mq4_info);
+        final TextView upperTextWithInfo = (TextView) v.findViewById(R.id.upperTextWithInfo);
         final TextView firstInfoText = (TextView) v.findViewById(R.id.firstInfoText);
         final TextView secondInfoText = (TextView) v.findViewById(R.id.secondInfoText);
         final TextView thirdInfoText = (TextView) v.findViewById(R.id.thirdInfoText);
@@ -84,15 +78,15 @@ public class MQ4Fragment extends Fragment {
          *
          *
          */
-
         /**
          *
          * Request
          *
          */
-        okHTTP mq4 = new okHTTP();
+        upperTextWithInfo.setText(R.string.mq7_info);
+        okHTTP mq7 = new okHTTP();
         final int textSize = Math.round(firstInfoText.getTextSize());
-        mq4.run("http://"+Shared.getStringPreferences(getActivity(),"URL_REQUEST_CONFIG1")+"/mq4", new Callback() {
+        mq7.run("http://"+Shared.getStringPreferences(getActivity(),"URL_REQUEST_CONFIG2")+"/mq7", new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();
@@ -102,18 +96,18 @@ public class MQ4Fragment extends Fragment {
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
                     final String myResponse = response.body().string();
-                    if (getActivity() != null) {
+                    if (this != null) {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 firstInfoText.setText(differentSize.spannableTwoString("В промилле", textSize, myResponse,
                                         textSize * 4, "‰", textSize + 10));
-                                secondInfoText.setText(differentSize.spannableTwoString("Массовая концентрация", textSize, convert.ppmToMg(myResponse, 16.04),
+                                secondInfoText.setText(differentSize.spannableTwoString("Массовая концентрация", textSize, convert.ppmToMg(myResponse, 28.01),
                                         textSize * 4, "мг/м", textSize + 10));
                                 secondInfoText.append(Html.fromHtml("<sup><small>3</sup></small>"));
                                 thirdInfoText.setText(differentSize.spannableTwoString("Объёмная доля", textSize, convert.ppmToVolumeFraction(myResponse),
                                         textSize * 4, "%", textSize + 10));
-                                fourInfoText.setText(differentSize.spannableTwoString("НКПР", textSize, convert.ppmToLowExplosionLevel(myResponse, 2.27),
+                                fourInfoText.setText(differentSize.spannableTwoString("НКПР", textSize, convert.ppmToLowExplosionLevel(myResponse, 0.917),
                                         textSize * 4, "%", textSize + 10));
                             }
                         });
@@ -121,7 +115,6 @@ public class MQ4Fragment extends Fragment {
                 }
             }
         });
-
         /**
          *
          *
@@ -133,8 +126,8 @@ public class MQ4Fragment extends Fragment {
          * CHART
          *
          */
-        LineDataSet lineDataSet = new LineDataSet(arrayList.lineChartDataSetRandom(),"ppm ");
-        ArrayList<ILineDataSet> iLineDataSets = new ArrayList<>();
+        LineDataSet lineDataSet = new LineDataSet(arrayList.getArrayListFromDB(getActivity(), MyConstants.MQ7),"ppm ");
+        ArrayList <ILineDataSet> iLineDataSets = new ArrayList<>();
         iLineDataSets.add(lineDataSet);
 
         LineData lineData = new LineData(iLineDataSets);
@@ -176,8 +169,9 @@ public class MQ4Fragment extends Fragment {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
                         //Проверка фрагмента
-                        Shared.saveStringPreferences(getActivity(),"FRAGMENT_STATUS","MQ4");
+                        Shared.saveStringPreferences(getActivity(),"FRAGMENT_STATUS","MQ7");
                         Toast.makeText(getActivity(),Shared.getStringPreferences(getActivity(),"FRAGMENT_STATUS"),Toast.LENGTH_SHORT).show();
 
                         Intent intent = new Intent("android.intent.action.ChartActivity");
@@ -186,6 +180,4 @@ public class MQ4Fragment extends Fragment {
                 }
         );
     }
-
-
 }

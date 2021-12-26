@@ -1,4 +1,4 @@
-package com.ventus.app;
+package com.ventus.app.fragments;
 
 
 import android.content.Context;
@@ -20,10 +20,16 @@ import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.ventus.app.R;
+import com.ventus.app.db.MyConstants;
+import com.ventus.app.tools.Shared;
+import com.ventus.app.tools.arrayList;
+import com.ventus.app.tools.convert;
+import com.ventus.app.tools.differentSize;
+import com.ventus.app.tools.okHTTP;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -121,7 +127,7 @@ public class MQ135Fragment extends Fragment {
          * CHART
          *
          */
-        LineDataSet lineDataSet = new LineDataSet(arrayList.lineChartDataSetRandom(),"ppm");
+        LineDataSet lineDataSet = new LineDataSet(arrayList.getArrayListFromDB(getActivity(), MyConstants.MQ135),"ppm");
         ArrayList<ILineDataSet> iLineDataSets = new ArrayList<>();
         iLineDataSets.add(lineDataSet);
 
